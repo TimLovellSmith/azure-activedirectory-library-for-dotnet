@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard1.1;netstandard1.3;win81;MonoAndroid8.1;Xamarin.iOS10</TargetFrameworks>        
+    <TargetFrameworks>net45;netstandard1.1;netstandard1.3;win81;MonoAndroid8.1;Xamarin.iOS10</TargetFrameworks>
     <Authors>Microsoft</Authors>
     <PackageTitle>Microsoft Authentication Library</PackageTitle>
     <PackageLicenseUrl>https://go.microsoft.com/fwlink/?linkid=844762</PackageLicenseUrl>
@@ -27,6 +27,7 @@
     <!-- Workaround until Xamarin supports PPDB -->
     <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
     <DebugType>full</DebugType>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.1' ">
     <DefineConstants>$(DefineConstants);FACADE</DefineConstants>
@@ -145,13 +146,40 @@
     </PackageReference>
     <Compile Include="Platforms\Android\**\*.cs" />
   </ItemGroup>
-  
+
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\src\Microsoft.Identity.Core.csproj" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <Content Include="..\..\..\core\src\bin\$(Configuration)\net45\Microsoft.Identity.Core.dll">
+      <Pack>True</Pack>
+      <PackagePath>lib\net45</PackagePath>
+    </Content>
+    <Content Include="..\..\..\core\src\bin\$(Configuration)\netstandard1.1\Microsoft.Identity.Core.dll">
+      <Pack>True</Pack>
+      <PackagePath>lib\netstandard1.1</PackagePath>
+    </Content>
+    <Content Include="..\..\..\core\src\bin\$(Configuration)\netstandard1.3\Microsoft.Identity.Core.dll">
+      <Pack>True</Pack>
+      <PackagePath>lib\netstandard1.3</PackagePath>
+    </Content>
+    <Content Include="..\..\..\core\src\bin\$(Configuration)\win81\Microsoft.Identity.Core.dll">
+      <Pack>True</Pack>
+      <PackagePath>lib\win81</PackagePath>
+    </Content>
+    <Content Include="..\..\..\core\src\bin\$(Configuration)\MonoAndroid8.1\Microsoft.Identity.Core.dll">
+      <Pack>True</Pack>
+      <PackagePath>lib\monoandroid81</PackagePath>
+    </Content>
+    <Content Include="..\..\..\core\src\bin\$(Configuration)\Xamarin.iOS10\Microsoft.Identity.Core.dll">
+      <Pack>True</Pack>
+      <PackagePath>lib\xamarinios10</PackagePath>
+    </Content>
+  </ItemGroup>
+
   <!-- This is here to workaround designer issues so VS sees them appropriately -->
   <ItemGroup>
     <None Update="Platforms\net45\CustomWebBrowser.CustomWebBrowserEvent.cs" SubType="Component" />
